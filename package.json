@@ -1,0 +1,21 @@
+{
+	"name"    : "",
+	"version" : "2.0.0",
+	"engines" : {
+		"node" : "0.10.0"
+	},
+
+	"repository" : {
+		"type" : "git",
+		"url"  : "http://github.com/MWNG/framework"
+	},
+
+	"scripts" : {
+		"test" : "test/runAll.sh"
+	},
+
+	"dependencies" : {
+		"phantomjs"       : "*",
+		"mocha-phantomjs" : "*"
+	}
+}
