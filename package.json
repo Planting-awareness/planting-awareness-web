@@ -1,20 +1,13 @@
 {
-	"name"    : "",
-	"version" : "2.0.0",
-	"engines" : {
-		"node" : "0.10.0"
-	},
+	"name"    : "planting-awareness-web",
+	"version" : "1.0.0",
 
 	"repository" : {
 		"type" : "git",
-		"url"  : "http://github.com/MWNG/framework"
+		"url"  : "https://github.com/Planting-awareness/planting-awareness-web"
 	},
 
-	"scripts" : {
-		"test" : "test/runAll.sh"
-	},
-
-	"dependencies" : {
+	"devDependencies" : {
 		"phantomjs"       : "*",
 		"mocha-phantomjs" : "*"
 	}
