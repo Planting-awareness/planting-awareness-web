@@ -9,12 +9,13 @@ Plante
 		findOne : 'GET /plants/{id}.json'
 	}, {});
 
-	var Reading = can.Model({
-		findAll : 'GET /plants/{id}/sensorvalues.json'
+	var SensorReading = can.Model({
+		findAll : 'GET /plants/{id}/sensorvalues.json?from={from}&to={to}&page={page}'
 	}, {});
 
 
 	window.app = {};
 	window.app.Plant = Plant;
+	window.app.SensorReading= SensorReading;
 }());
 

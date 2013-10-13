@@ -1,4 +1,6 @@
-var Plant = window.app.Plant;
+var Plant = window.app.Plant,
+	SensorReading = window.app.SensorReading;
+
 describe('Plant#findAll', function () {
 
 	// Fixture's take some time to set up the first time
@@ -39,6 +41,15 @@ describe('Plant#findOne', function() {
 	it('should return the requested plant', function (done) {
 		$.when(Plant.findOne({id : 1})).done(function (res) {
 			expect(res).to.be.a(Plant);
+			done();
+		});
+	});
+});
+
+describe('SensorReading#findAll', function() {
+	it('should return an array of readings', function (done) {
+		SensorReading.findAll().done(function (res) {
+			expect(res.length).to.not.be(undefined);
 			done();
 		});
 	});

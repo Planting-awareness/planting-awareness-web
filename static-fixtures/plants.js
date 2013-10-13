@@ -17,15 +17,3 @@ var PLANTS = [
 	}
 ];
 
-
-can.fixture('GET /plants.json', function () {
-	return PLANTS;
-});
-
-can.fixture('GET /plants/{id}.json', function (request, response, headers) {
-	return PLANTS[request.data.id-1];
-});
-
-can.fixture.delay = 0;
-
-
