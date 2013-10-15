@@ -14,10 +14,13 @@
 <script src="../js/lib/jquery-2.0.3.min.js"></script>
 <script src="../js/lib/can.custom.js"></script>
 
+<script src="../js/models/Plant.js"></script>
+<script src="../js/models/SensorReading.js"></script>
 <script src="../static-fixtures/plants.js"></script>
-<script src="../js/app.js"></script>
+<script src="../static-fixtures/fixture-setup.js"></script>
+<!--<script src="../js/app.js"></script>-->
 <script>mocha.setup('bdd')</script>
-<script src="app.test.js"></script>
+<script src="knowledge-testing.js"></script>
 <script>
     if (window.mochaPhantomJS) { mochaPhantomJS.run(); }
     else { mocha.run(); }

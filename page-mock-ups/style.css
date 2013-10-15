@@ -2,11 +2,11 @@ body {
 font-family: Helvetica Nueu, Helvetica, Arial, sans-serif; text-align: center; background-color:#E8E8E8;
 }
 
-section#calendar time a { 
+#days time a {
 display: block; width: 110px; height: 110px; margin: 5px 5px 0 0; padding: 3px 3px 0 0; color: #f55b2c; text-decoration: none; 
 }
 
-section#calendar time a:hover { 
+#days time a:hover {
 color: #000; 
 }
 
@@ -18,11 +18,11 @@ time.notmonth {
 background: #777; 
 }
 
-section#calendar time.notmonth a:hover { 
+section#days time.notmonth a:hover {
 color: #f55b2c; 
 }
 
-section#calendar { 
+section#days {
 width: 970px; 
 }
 

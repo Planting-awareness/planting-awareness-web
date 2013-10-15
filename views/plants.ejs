@@ -1,0 +1,24 @@
+<header id="header">
+	<h1>Planting Awareness</h1>
+</header>
+
+<section id="main">
+	<div class="row-fluid offset2">
+
+		<% // Create a plant view for each registered plant
+				plants.each(function(plant) {
+		%>
+		<div class="span4 plant">
+			<img src="../page-mock-ups/img1.jpg" alt="Bilde av en plante">
+
+			<ul>
+				<li class="plant-attribute main-attribute"><%= plant.attr('name') %></li>
+				<li class="plant-attribute"><%= plant.attr('plant_type') %></li>
+				<li class="plant-attribute"><%= plant.attr('location') %></li>
+			</ul>
+			<button>Se detaljer om planten &raquo;</button>
+		</div>
+		<% }); %>
+
+	</div>
+</section>

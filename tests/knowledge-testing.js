@@ -1,12 +1,18 @@
-var Plant = window.app.Plant,
-	SensorReading = window.app.SensorReading;
-
 describe('Plant#findAll', function () {
 
 	// Fixture's take some time to set up the first time
 	// Run it once before the tests to 'warm up'
 	before(function(done) {
-		Plant.findAll({}, function(){ done(); });
+		console.log('hei');
+		Plant.findAll({}).done(function(){
+			console.log('suksess')
+			done();
+
+		}).fail(function() {
+				console.log('feilet', arguments)
+
+			});
+//			done(); });
 	});
 
 	it('should take a callback', function(done) {
@@ -47,7 +53,7 @@ describe('Plant#findOne', function() {
 });
 
 describe('SensorReading#findAll', function() {
-	it('should return an array of readings', function (done) {
+	it.skip('should return an array of readings', function (done) {
 		SensorReading.findAll().done(function (res) {
 			expect(res.length).to.not.be(undefined);
 			done();
