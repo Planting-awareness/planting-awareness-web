@@ -11,12 +11,15 @@
 			are available as this.element and this.options */
 
 			var plants = this.options.plants,
-				state = this.options.state, // used for routing
 				view = this.options.view;
 
 
 			// render the plant chooser view
 			this.element.append(can.view(view, { plants : plants }));
+		},
+
+		"{can.route} plant_id" : function (route, event, newVal, oldVal) {
+			console.log(arguments);
 		}
 	});
 

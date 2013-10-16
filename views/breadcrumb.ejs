@@ -1,0 +1,14 @@
+<section id="breadcrumb">
+	<div>Du er her :</div>
+	<div class="breadcrumb">
+		Plantevalg
+		<% if(route.attr('plant_id')) { %>
+			<span>=></span>  Plante <%= route.attr('plant_id') %>
+
+			<% if(route.attr('day')) { %>
+			<span>=></span>  Dag <%= route.attr('day') %>
+			<% } %>
+
+		<% } %>
+	</div>
+</section>

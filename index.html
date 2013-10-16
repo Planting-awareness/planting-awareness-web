@@ -13,11 +13,20 @@
 </head>
 <body>
 
-<div id="planting-awareness-app" ></div>
+<div id="app">
+    <header>
+        <h1>Plantevalg</h1>
+        <section id="breadcrumb"></section>
+    </header>
+    <section id="plant-chooser"></section>
+    <section id="day-chooser"></section>
+    <section id="day-viewer"></section>
+</div>
 
 <script src="js/lib/can.custom.js"></script>
 <script src="js/models/Plant.js"></script>
 <script src="js/controllers/PlantChooser.js"></script>
+<script src="js/controllers/BreadcrumbController.js"></script>
 
 <!-- static data -->
 <script src="static-fixtures/plants.js"></script>

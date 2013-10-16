@@ -5,21 +5,27 @@
 
 	$(document).ready(function () {
 
-		/* TODO: the route bits here are doing nothing.
-		They have simply taken been taken from the TodoMVC example, and
-		they are awaiting further usage. Don't know what they do yet.
-		 */
-		// Set up a route that maps to the `filter` attribute
-		can.route(':filter');
+		//TODO: setup listeners to react to changes in the hashstring
+		//@see http://canjs.com/guides/RecipesRouting.html
+		can.route('plant/:plant_id', {
+			plant : undefined,
+			day   : undefined
+		});
+		can.route('plant/:plant_id/day/:day', {
+			plant : undefined,
+			day   : undefined
+		});
+
 		// Delay routing until we initialized everything
 		can.route.ready(false);
 
+		new Breadcrumb('#breadcrumb');
 
 		Plant.findAll({}, function (plants) {
-			new PlantChooser('#planting-awareness-app', {
+			new PlantChooser('#plant-chooser', {
 				plants : plants,
-				state : can.route,
-				view : 'views/plants.ejs'
+				state  : can.route,
+				view   : 'views/plants.ejs'
 			});
 		});
 
