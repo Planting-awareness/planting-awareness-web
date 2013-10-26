@@ -1,17 +1,22 @@
-/* globals: jQuery can */
-(function (namespace) {
+/* globals: jQuery can app */
+(function () {
 
 	// constructor function for the PlantChooser controller
-	var Breadcrumb = can.Control({
-		defaults : {
-			view : 'views/breadcrumb.ejs'
-		}
-	}, {
+	app.Breadcrumb = can.Control({}, {
 		init : function () {
-			var view = this.options.view;
-			this.element.append(can.view(view, { route : can.route }));
+			var view = this.options.view,
+				route = can.route,
+				breadcrumbs = can.compute(function () {
+					var list = [];
+					if (route.attr('plantId')) {
+						list.push(['Plante ', route.attr('plantId')]);
+					}
+					if (route.attr('day')) {
+						list.push(['Dag' , route.attr('day')]);
+					}
+					return list;
+				});
+			this.element.append(can.view(view, {  breadcrumbs : breadcrumbs }));
 		}
 	});
-
-	namespace.Breadcrumb = Breadcrumb;
-}(window));
+}());

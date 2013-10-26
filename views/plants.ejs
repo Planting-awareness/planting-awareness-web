@@ -1,18 +1,21 @@
-<div class="row-fluid offset2">
+<div id="plant-chooser" class="row-fluid offset2">
 
 	<% // Create a plant view for each registered plant
-			plants.each(function(plant) {
+	plants.each(function(plant) {
 	%>
 	<div class="span4 plant">
-		<img src="../page-mock-ups/img1.jpg" alt="Bilde av en plante">
+		<img src="<%= imgs.attr(plant.id) %>" alt="Bilde av en plante">
+		<!--<img src="../page-mock-ups/img1.jpg" alt="Bilde av en plante">-->
 
 		<ul>
 			<li class="plant-attribute main-attribute"><%= plant.attr('name') %></li>
 			<li class="plant-attribute"><%= plant.attr('plant_type') %></li>
 			<li class="plant-attribute"><%= plant.attr('location') %></li>
 		</ul>
-		<button><%== can.route.link("Se detaljer om planten &raquo;", {plant_id : plant.attr('id')}) %>
+
+		<button><%== can.route.link("Se mer", {plantId : plant.attr('id')}) %>
 		</button>
+
 	</div>
 	<% }); %>
 

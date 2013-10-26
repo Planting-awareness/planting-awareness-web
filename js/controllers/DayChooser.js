@@ -1,16 +1,12 @@
-/* globals: jQuery can */
-(function (namespace) {
+/* globals: jQuery can app */
+(function () {
 
 	// constructor function for the PlantChooser controller
-	var Picker = can.Control({
-		/* here you can put static data, like default options */
+	app.DayChooser = can.Control({
+		/* here you can put static data/functions for the constructor object itself */
 	}, {
 		init : function () {
-
-			// render the plant chooser view
-			this.element.append(can.view(view, { plants : plants }));
+			// Get number of days
 		}
-	});
-
-	namespace.DatePicker = Picker ;
-}(window));
+	}) ;
+}());

@@ -1,10 +1,8 @@
-(function (namespace) {
+(function () {
 	'use strict';
 
-	var Plant = can.Model({
+	app.Plant = can.Model({
 		findAll : 'GET /plants.json',
 		findOne : 'GET /plants/{id}.json'
 	}, {});
-
-	namespace.Plant = Plant;
-}(window));
+}());
