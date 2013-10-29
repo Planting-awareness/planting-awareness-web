@@ -5,8 +5,6 @@
 
 	$(document).ready(function () {
 
-		// Delay routing until we initialized everything
-		can.route.ready(false);
 
 		new app.Breadcrumb('#breadcrumb', {
 			view : 'views/breadcrumb.ejs'
@@ -14,7 +12,7 @@
 
 		new app.Router('#container', {});
 
-		can.route.ready(true);
+		can.route.ready();
 
 	});
 }(window.jQuery) );

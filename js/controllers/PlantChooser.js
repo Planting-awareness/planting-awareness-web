@@ -1,4 +1,4 @@
-/* globals: jQuery can */
+/* globals: jQuery can app */
 (function () {
 
 	// constructor function for the PlantChooser controller
@@ -17,14 +17,16 @@
 			// initiate server call and add plants to the list as they are available
 			app.Plant.findAll({}).done(function (plantsFromServer) {
 
-				// using apply we can supply the list of arguments
-				// Google "mdn apply" to know more about how this works
+				/* Push the plants on the observable list
+				//
+				// On the use of 'apply': using apply we can construct the list of arguments to a function
+				//                        Google "mdn apply" to know more about how this works */
 				can.List.prototype.push.apply(plants, plantsFromServer);
 
-				plants.each(function(plant) {
+				plants.each(function (plant) {
 					var id = plant.attr('id');
 					app.SensorReading.findFirstAndLast({ id : id})
-						.done(function(res){
+						.done(function (res) {
 							imageUrls.attr(id, res.last.attr('img_url'));
 						});
 				});

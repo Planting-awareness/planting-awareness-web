@@ -1,16 +1,21 @@
 /**
- * @author carl-erik@gmail.com
  * @date   2013-10-22
  */
 
 (function () {
 	"use strict";
-	var plantChooserId = '#plant-chooser';
-	var dayChooserId = '#day-chooser';
+	var $rootElem,
+		plantChooserId = 'plant-chooser',
+		dayChooserId = 'day-chooser',
+		statisticsViewId = "#statistics-view";
 
 	app.Router = can.Control({}, {
 
-		"{can.route} change" : function() {
+		init : function() {
+			$rootElem = this.element;
+		},
+
+		"{can.route} change" : function () {
 //			console.log("Change ");
 		},
 
@@ -21,15 +26,20 @@
 		"plant/:plantId route" : function (data) {
 			console.log("Plant route", data.plantId);
 
-			new app.DayChooser(dayChooserId, {
-				view : 'views/day-chooser.ejs'
+			$('#'+plantChooserId).fadeOut().remove();
+			$rootElem.append('<div id="'+ dayChooserId + '"></div>');
+
+			new app.DayChooser('#' + dayChooserId, {
+				view    : 'views/day-chooser.ejs',
+				plantId : data.plantId
 			});
 		},
 
 		"route" : function (data) {
 			console.log('route Default route', arguments);
 
-			new app.PlantChooser(plantChooserId, {
+			$rootElem.html('<div id="'+ plantChooserId + '"></div>');
+			new app.PlantChooser('#'+plantChooserId, {
 				view : 'views/plants.ejs'
 			});
 

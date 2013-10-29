@@ -1,8 +1,16 @@
-<section id="day-chooser">
-	<aside class="info-panel">
-		<img src="missing.jpg" width="150px" height="150px"/>
-	</aside>
-	<ul class="days">
-		<li class=""></li>
-	</ul>
-</section>
+<aside class="info-panel">
+	<img missingsrc="missing.jpg" style="height: 150px; width: 150px;"/>
+	<! -- insert a view here -->
+	<! can.render('views/info-box.ejs') -->
+	<div>Bacon ipsum dolor sit amet chuck swine sausage, turducken bacon short ribs fatback bresaola andouille shankle
+		hamburger venison. Turducken strip steak filet mignon tri-tip shoulder ground round ribeye pork belly beef bacon
+		kevin. Hamburger brisket bresaola shankle chicken doner. Turducken capicola corned beef, leberkas meatloaf jerky
+		pork chop sausage bresaola.
+	</div>
+</aside>
+
+<ul class="days">
+	<% days.forEach(function(day, index) { %>
+	<li><%== can.route.link(index + 1, {plantId : plantId, day : index + 1}) %><%= day %></li>
+	<% }); %>
+</ul>

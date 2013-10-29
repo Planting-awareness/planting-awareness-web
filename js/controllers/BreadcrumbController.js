@@ -7,12 +7,15 @@
 			var view = this.options.view,
 				route = can.route,
 				breadcrumbs = can.compute(function () {
-					var list = [];
-					if (route.attr('plantId')) {
-						list.push(['Plante ', route.attr('plantId')]);
+					var list = [],
+						day = route.attr('day'),
+						plantId = route.attr('plantId');
+
+					if (plantId) {
+						list.push(can.route.link('Plante ' + plantId, {plantId : plantId}));
 					}
-					if (route.attr('day')) {
-						list.push(['Dag' , route.attr('day')]);
+					if (day) {
+						list.push(can.route.link('Dag ' + day, {plantId : plantId, day : day}));
 					}
 					return list;
 				});

@@ -24,7 +24,7 @@
 	function stripHostName (url) {
 		if (!url || !url.match(/^http:/)) { return url; }
 
-		return url.replace(/http:\/\/monoplant.me\//, "");
+		return url.replace(/http:\/\/monoplant.me/, "");
 	}
 
 	function firstReading (data) {
@@ -38,14 +38,24 @@
 	app.SensorReading = can.Model({
 		findAll          : 'GET ' + url,
 		findFirstAndLast : function (params) {
-			var dfd = $.Deferred();
+			if(!this.cache) { this.cache = {}; }
+
+			var dfd = $.Deferred(), cache = this.cache;
+
+
+			if(cache[params.id]) {
+				dfd.resolve(cache[params.id]);
+				return dfd;
+			}
 
 			$.ajax(replaceTokens(url, params), {
 				success : function (data, textStatus, jqXHR) {
 					var responseHeader , h, lastUrl, first;
 
 					function buildResultAndResolve (data) {
-						dfd.resolve({first : first, last : lastReading(data) });
+						var result = {first : first, last : lastReading(data) };
+						cache[params.id] = result;
+						dfd.resolve(result);
 					}
 
 					first = firstReading(data);
