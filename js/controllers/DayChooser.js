@@ -30,13 +30,34 @@
 		init : function () {
 			var plantId = this.options.plantId,
 				view = this.options.view,
-				dayList = can.List();
+				dayList = can.List(),
+				imageMap = can.Map();
 
-			app.SensorReading.findFirstAndLast({id : plantId}).done(function(res) {
+			app.SensorReading.findFirstAndLast({id : plantId}).done(function (res) {
 				can.List.prototype.push.apply(dayList, generateDayList(res.first.created(), res.last.created()));
+
+				/*
+				 * Server calls to fetch the images for each day
+				 */
+//				console.log('Daylist', dayList);
+				dayList.each(function (day) {
+					console.log('Day', day);
+					// get sensordata of day
+					// add imageurl to the imagemap
+					//imageMap.attr(currentDay, imageUrl)
+					app.SensorReading.findOne({id: plantId, from : day})
+						.done(function (sensorData) {
+							var imageUrl = sensorData[0]
+							console.log(imageUrl);
+							imageMap.attr(day, imageUrl.img_url);
+						});
+				});
 			});
 
-			this.element.html(can.view(view, { plantId : plantId, days : dayList }));
+
+			window.imageMap = imageMap;
+
+			this.element.html(can.view(view, { plantId : plantId, days : dayList, imageMap : imageMap }));
 		}
 	});
 }());

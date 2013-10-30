@@ -36,14 +36,15 @@
 	}
 
 	app.SensorReading = can.Model({
+		findOne          : 'GET /plants/{id}/sensorvalues.json?from={from}&page=1',
 		findAll          : 'GET ' + url,
 		findFirstAndLast : function (params) {
-			if(!this.cache) { this.cache = {}; }
+			if (!this.cache) { this.cache = {}; }
 
 			var dfd = $.Deferred(), cache = this.cache;
 
 
-			if(cache[params.id]) {
+			if (cache[params.id]) {
 				dfd.resolve(cache[params.id]);
 				return dfd;
 			}

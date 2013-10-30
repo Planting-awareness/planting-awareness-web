@@ -11,6 +11,7 @@
 
 <ul class="days">
 	<% days.forEach(function(day, index) { %>
-	<li><%== can.route.link(index + 1, {plantId : plantId, day : index + 1}) %><%= day %></li>
+	<li class="day-cell"><img src="<%= imageMap.attr(day) %>" class="daily-img"/>
+		<%== can.route.link(index + 1, {plantId : plantId, day : index + 1}) %><%= day %></li>
 	<% }); %>
 </ul>

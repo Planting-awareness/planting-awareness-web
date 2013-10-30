@@ -1,0 +1,9 @@
+
+
+#day-chooser .daily-img {
+    width: 150px;
+}
+
+#day-chooser .day-cell{
+    display: inline-block;
+}

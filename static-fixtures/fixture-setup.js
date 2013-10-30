@@ -1,4 +1,4 @@
-can.fixture.delay = 50;
+can.fixture.delay = 200;
 
 can.fixture('GET /plants.json', function () {
 	return PLANTS;
