@@ -35,7 +35,7 @@
 		return new app.SensorReading(data[data.length - 1]);
 	}
 
-	app.SensorReading = can.Model({
+	app.SensorReading = can.Model.extend({
 		findOne          : 'GET /plants/{id}/sensorvalues.json?from={from}&page=1',
 		findAll          : 'GET ' + url,
 		findFirstAndLast : function (params) {
