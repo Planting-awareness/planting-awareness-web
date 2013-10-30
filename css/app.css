@@ -2,8 +2,37 @@
 
 #day-chooser .daily-img {
     width: 150px;
+	float: left;
+	margin-top:20px;
+}
+
+#day-chooser .side_left{
+	text-align: center;
 }
 
 #day-chooser .day-cell{
     display: inline-block;
+	float: left;
+	position:relative;
+	margin-left:20px;
+}
+
+#day-chooser span{
+ display:block;
+ text-align:center;
+ 
+}
+
+#day-chooser .link{
+	position: absolute;
+	left: 0;
+	top: 0;
+	padding: 40px;
+	font-size: 50px;
+	color:#66FF00;
+	opacity:0.75;
+}
+
+.row {
+    margin-top: 20px;
 }
