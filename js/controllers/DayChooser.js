@@ -39,16 +39,13 @@
 				/*
 				 * Server calls to fetch the images for each day
 				 */
-//				console.log('Daylist', dayList);
 				dayList.each(function (day) {
-					console.log('Day', day);
 					// get sensordata of day
 					// add imageurl to the imagemap
 					//imageMap.attr(currentDay, imageUrl)
 					app.SensorReading.findOne({id: plantId, from : day})
 						.done(function (sensorData) {
 							var imageUrl = sensorData[0]
-							console.log(imageUrl);
 							imageMap.attr(day, imageUrl.img_url);
 						});
 				});
