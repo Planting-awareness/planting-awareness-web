@@ -1,10 +1,10 @@
-<div class="row-fluid offset2">
+<div class="row col-md-offset-1">
 
 	<% // Create a plant view for each registered plant
 	plants.each(function(plant) {
 	%>
-	<div class="span4 plant">
-		<img <%= imgs.attr(plant.id)? 'src="' + imgs.attr(plant.id) + '"' : '' %> alt="Bilde av en plante" />
+	<div class="col-md-4 plant">
+		<img width="300px" <%= imgs.attr(plant.id)? 'src="' + imgs.attr(plant.id) + '"' : '' %> alt="Bilde av en plante" />
 
 		<ul>
 			<li class="plant-attribute main-attribute"><%= plant.attr('name') %></li>
