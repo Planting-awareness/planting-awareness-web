@@ -46,7 +46,7 @@
 					app.SensorReading.findOne({id: plantId, from : day})
 						.done(function (sensorData) {
 							var imageUrl = sensorData[0]
-							imageMap.attr(day, imageUrl.img_url);
+							imageMap.attr(day, imageUrl.thumb_url);
 						});
 				});
 			});

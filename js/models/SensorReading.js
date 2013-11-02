@@ -1,44 +1,26 @@
 /* global: can app */
 (function () {
 	'use strict';
-//	var url = '/plants/{id}/sensorvalues.json?from={from}&to={to}&page={page}';
-//	var url = '/plants/1/sensorvalues.json?&to=2013-10-26&from=2013-10-24&page=10';
-
-	function isoDate (d) {
-		return d.toISOString().substring(0, 10);
-	}
 
 	function replaceTokens (url, tokens) {
-		var s = url;
-		for (var token in tokens) {
-			if (tokens.hasOwnProperty(token)) {
-				s = s.replace(new RegExp('{' + token + '}', 'g'), tokens[token]);
-			}
-		}
-		return s;
+		return utils.replaceTokens(url,tokens);
 	}
 
 	// the headers contain the hostnames of monoplant.me - not our server. remove that part
 	function stripHostName (url) {
-		if (!url || !url.match(/^http:/)) { return url; }
-
-		return url.replace(/http:\/\/monoplant.me/, "");
+		return utils.stripHostName(url);
 	}
 
 	function firstReading (data) {
-		return new app.SensorReading(data[0]);
+		return utils.firstReading(data);
 	}
 
 	function lastReading (data) {
-		return new app.SensorReading(data[data.length - 1]);
+		return utils.lastReading(data);
 	}
 
 	function getLinkHeader (jqXHR) {
-		var responseHeader = jqXHR.getResponseHeader("Link");
-		if (!responseHeader) {
-			throw new Error("Server did not return Link header.");
-		}
-		return responseHeader;
+		return utils.getLinkHeader(jqXHR);
 	}
 
 	app.SensorReading = can.Model.extend({
@@ -46,7 +28,7 @@
 		 * Meant to be used to just get the first data object
 		 * @returns an array of data from the given date
 		 */
-		findOne : 'GET /plants/{id}/sensorvalues.json?from={from}&page=1',
+		findOne : 'GET /plants/{id}/sensorvalues.json?from={from}&page=1&limit=1',
 
 		/**
 		 * Retrieve all sensor data from a given date
@@ -61,9 +43,8 @@
 		findAllOnDate : function (params) {
 			var dfd = $.Deferred(),
 				resultList = app.SensorReading.List(),
-				url = '/plants/{id}/sensorvalues.json?from={date}&to={date}&page={page}',
-				oneDayInMillis = 1000 * 3600 * 24,
-				nextDayMillis = new Date(params.from).getTime() + oneDayInMillis;
+				url = '/plants/{id}/sensorvalues.json?from={date}&to={date}&page={page}&limit=200';
+
 
 			function appendToList (rawReadings) {
 				rawReadings.forEach(function (reading) {
@@ -82,6 +63,8 @@
 						appendToList(data);
 
 						responseHeader = getLinkHeader(jqXHR);
+
+						if (!responseHeader) { dfd.reject(); }
 						parser = new app.LinkHeaderParser(responseHeader);
 						lastUrl = parser.getUrlOfLastResultPage();
 
@@ -89,6 +72,7 @@
 						if (!match) { throw new Error('Could not parse url: ' + lastUrl); }
 
 						numberOfPages = match[1];
+
 						dfd.resolve(numberOfPages);
 					}
 					return dfd;
@@ -111,7 +95,7 @@
 
 			var dfd = $.Deferred(),
 				cache = this.cache,
-				url = '/plants/{id}/sensorvalues.json?page=1';
+				url = '/plants/{id}/sensorvalues.json?page=1&limit=1';
 
 
 			if (cache[params.id]) {
@@ -123,23 +107,23 @@
 				.done(function (data, textStatus, jqXHR) {
 					var responseHeader , h, lastUrl, first;
 
-					function buildResultAndResolve (data) {
-						var result = {first : first, last : lastReading(data) };
+					function buildResultAndResolve (resultsFromLastPage) {
+						var result = {first : first, last : lastReading(resultsFromLastPage) };
 						cache[params.id] = result;
 						dfd.resolve(result);
 					}
 
+					first = firstReading(data);
+
 					responseHeader = getLinkHeader(jqXHR);
 
-					h = new app.LinkHeaderParser(responseHeader);
-
-					first = firstReading(data);
-					lastUrl = stripHostName(h.getUrlOfLastResultPage());
-
 					// if none found, means all results are contained on the current page
-					if (!lastUrl) {
+					if (!responseHeader) {
 						buildResultAndResolve(data);
 					} else {
+						h = new app.LinkHeaderParser(responseHeader);
+						lastUrl = stripHostName(h.getUrlOfLastResultPage());
+
 						// go the the last result on the server and fetch that page
 						$.ajax(lastUrl).done(buildResultAndResolve);
 					}
