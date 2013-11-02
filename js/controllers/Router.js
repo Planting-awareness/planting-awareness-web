@@ -7,6 +7,7 @@
 	var $rootElem,
 		plantChooserId = 'plant-chooser',
 		dayChooserId = 'day-chooser',
+		choosenDayId = 'choosen-day',
 		statisticsViewId = "#statistics-view";
 
 	app.Router = can.Control({}, {
@@ -21,6 +22,13 @@
 
 		"plant/:plantId/day/:day route" : function (data) {
 			console.log("Day route", data);
+			
+			$rootElem.append('<div id="'+ choosenDayId + '"></div>');
+			new app.ReadingsView('#'+choosenDayId, {
+				view : 'views/readings_view.ejs',
+				plantId: data.plantId,
+				day: data.day
+			});
 		},
 
 		"plant/:plantId route" : function (data) {

@@ -10,7 +10,7 @@
 			view : 'views/breadcrumb.ejs'
 		});
 
-		new app.Router('#container', {});
+		new app.Router('#main-content', {});
 
 		can.route.ready();
 

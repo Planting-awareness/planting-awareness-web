@@ -1,37 +1,20 @@
-
-<aside class="info-panel">
-	  
-	<img missingsrc="missing.jpg" style="height: 150px; width: 150px;"/>
+<ul class="days">
+	<% days.forEach(function(day, index) { 
+		var $link = $(can.route.link(index + 1, {plantId : plantId, day : index + 1}));
+			
+		$link.addClass('link');
+	%>
+	<li class="day-cell col-md-4" data-img="<%= imageMap.attr(day) %>">
+	<img src="<%= imageMap.attr(day) %>" class="daily-img" height="200" width="337"/>
+	<%== $link.get(0).outerHTML %>
 	
-	<! -- insert a view here -->
-	<! can.render('views/info-box.ejs') -->
-	<div class="container">
-		<div class="jumbotron col-md-12">Bacon ipsum dolor sit amet chuck swine sausage, turducken bacon short ribs fatback bresaola andouille shankle
-			hamburger venison. Turducken strip steak filet mignon tri-tip shoulder ground round ribeye pork belly beef bacon
-			kevin. Hamburger brisket bresaola shankle chicken doner. Turducken capicola corned beef, leberkas meatloaf jerky
-			pork chop sausage bresaola.
-		</div>
-	</div>
-</aside>	
-<div class="container">
-	<ul class="days col-md-1-offset-1">
-		<% days.forEach(function(day, index) { 
-			var $link = $(can.route.link(index + 1, {plantId : plantId, day : index + 1}));
-				
-			$link.addClass('link');
-		%>
-		<li class="day-cell" data-img="<%= imageMap.attr(day) %>">
-		<img src="<%= imageMap.attr(day) %>" class="daily-img"/>
-		<%== $link.get(0).outerHTML %>
-		
-		<% $('li').each(function() {
-			this.css('background-image', this.data('img'));
-		});
-		%>
-		<span> 
-			<%= day %>
-		</span>
-		</li>
-		<% }); %>
-	</ul>
-</div>
+	<% $('li').each(function() {
+		this.css('background-image', this.data('img'));
+	});
+	%>
+	<span class="jumbotron"> 
+		<%= day %>
+	</span>
+	</li>
+	<% }); %>
+</ul>

@@ -13,22 +13,23 @@
     display: inline-block;
 	float: left;
 	position:relative;
-	margin-left:20px;
 }
+
 
 #day-chooser span{
  display:block;
  text-align:center;
- 
 }
 
 #day-chooser .link{
 	position: absolute;
-	left: 0;
-	top: 0;
-	padding: 40px;
-	font-size: 50px;
-	color:#66FF00;
+	left: 14px;
+	top: 5px;
+	font-size: 90px;
+	color:#00FFFF;
 	opacity:0.75;
 }
 
+#app{
+	margin-left:0px;
+}
