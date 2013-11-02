@@ -1,41 +1,26 @@
 /* global: can app */
 (function () {
 	'use strict';
-//	var url = '/plants/{id}/sensorvalues.json?from={from}&to={to}&page={page}';
-//	var url = '/plants/1/sensorvalues.json?&to=2013-10-26&from=2013-10-24&page=10';
-
-	function isoDate (d) {
-		return d.toISOString().substring(0, 10);
-	}
 
 	function replaceTokens (url, tokens) {
-		var s = url;
-		for (var token in tokens) {
-			if (tokens.hasOwnProperty(token)) {
-				s = s.replace(new RegExp('{' + token + '}', 'g'), tokens[token]);
-			}
-		}
-		return s;
+		return utils.replaceTokens(url,tokens);
 	}
 
 	// the headers contain the hostnames of monoplant.me - not our server. remove that part
 	function stripHostName (url) {
-		if (!url || !url.match(/^http:/)) { return url; }
-
-		return url.replace(/http:\/\/monoplant.me/, "");
+		return utils.stripHostName(url);
 	}
 
 	function firstReading (data) {
-		return new app.SensorReading(data[0]);
+		return utils.firstReading(data);
 	}
 
 	function lastReading (data) {
-		return new app.SensorReading(data[data.length - 1]);
+		return utils.lastReading(data);
 	}
 
 	function getLinkHeader (jqXHR) {
-		var responseHeader = jqXHR.getResponseHeader("Link");
-		return responseHeader;
+		return utils.getLinkHeader(jqXHR);
 	}
 
 	app.SensorReading = can.Model.extend({
