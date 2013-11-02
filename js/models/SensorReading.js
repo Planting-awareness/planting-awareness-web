@@ -35,9 +35,6 @@
 
 	function getLinkHeader (jqXHR) {
 		var responseHeader = jqXHR.getResponseHeader("Link");
-		if (!responseHeader) {
-			throw new Error("Server did not return Link header.");
-		}
 		return responseHeader;
 	}
 
@@ -46,7 +43,7 @@
 		 * Meant to be used to just get the first data object
 		 * @returns an array of data from the given date
 		 */
-		findOne : 'GET /plants/{id}/sensorvalues.json?from={from}&page=1',
+		findOne : 'GET /plants/{id}/sensorvalues.json?from={from}&page=1&limit=1',
 
 		/**
 		 * Retrieve all sensor data from a given date
@@ -61,9 +58,8 @@
 		findAllOnDate : function (params) {
 			var dfd = $.Deferred(),
 				resultList = app.SensorReading.List(),
-				url = '/plants/{id}/sensorvalues.json?from={date}&to={date}&page={page}',
-				oneDayInMillis = 1000 * 3600 * 24,
-				nextDayMillis = new Date(params.from).getTime() + oneDayInMillis;
+				url = '/plants/{id}/sensorvalues.json?from={date}&to={date}&page={page}&limit=200';
+
 
 			function appendToList (rawReadings) {
 				rawReadings.forEach(function (reading) {
@@ -82,6 +78,8 @@
 						appendToList(data);
 
 						responseHeader = getLinkHeader(jqXHR);
+
+						if (!responseHeader) { dfd.reject(); }
 						parser = new app.LinkHeaderParser(responseHeader);
 						lastUrl = parser.getUrlOfLastResultPage();
 
@@ -89,6 +87,7 @@
 						if (!match) { throw new Error('Could not parse url: ' + lastUrl); }
 
 						numberOfPages = match[1];
+
 						dfd.resolve(numberOfPages);
 					}
 					return dfd;
