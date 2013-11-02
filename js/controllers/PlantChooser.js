@@ -17,11 +17,12 @@
 			// initiate server call and add plants to the list as they are available
 			app.Plant.findAll({}).done(function (plantsFromServer) {
 
-				/* Push the plants on the observable list
-				//
-				// On the use of 'apply': using apply we can construct the list of arguments to a function
-				//                        Google "mdn apply" to know more about how this works */
-				can.List.prototype.push.apply(plants, plantsFromServer);
+				plantsFromServer.forEach(function(plant){
+					// we are only interested in plants 3 and 4
+//					if(plant.id === 3 || plant.id === 4) {
+						plants.push(plant);
+//					}
+				});
 
 				plants.each(function (plant) {
 					var id = plant.attr('id');
