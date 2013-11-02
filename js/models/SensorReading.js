@@ -111,7 +111,7 @@
 
 			var dfd = $.Deferred(),
 				cache = this.cache,
-				url = '/plants/{id}/sensorvalues.json?page=1';
+				url = '/plants/{id}/sensorvalues.json?page=1&limit=1';
 
 
 			if (cache[params.id]) {
@@ -123,23 +123,23 @@
 				.done(function (data, textStatus, jqXHR) {
 					var responseHeader , h, lastUrl, first;
 
-					function buildResultAndResolve (data) {
-						var result = {first : first, last : lastReading(data) };
+					function buildResultAndResolve (resultsFromLastPage) {
+						var result = {first : first, last : lastReading(resultsFromLastPage) };
 						cache[params.id] = result;
 						dfd.resolve(result);
 					}
 
+					first = firstReading(data);
+
 					responseHeader = getLinkHeader(jqXHR);
 
-					h = new app.LinkHeaderParser(responseHeader);
-
-					first = firstReading(data);
-					lastUrl = stripHostName(h.getUrlOfLastResultPage());
-
 					// if none found, means all results are contained on the current page
-					if (!lastUrl) {
+					if (!responseHeader) {
 						buildResultAndResolve(data);
 					} else {
+						h = new app.LinkHeaderParser(responseHeader);
+						lastUrl = stripHostName(h.getUrlOfLastResultPage());
+
 						// go the the last result on the server and fetch that page
 						$.ajax(lastUrl).done(buildResultAndResolve);
 					}
