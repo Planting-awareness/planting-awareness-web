@@ -3,7 +3,7 @@
 	'use strict';
 
 	function replaceTokens (url, tokens) {
-		return utils.replaceTokens(url,tokens);
+		return utils.replaceTokens(url, tokens);
 	}
 
 	// the headers contain the hostnames of monoplant.me - not our server. remove that part
@@ -89,7 +89,10 @@
 			return dfd.promise();
 		},
 
-		/** Get the first and last sensor reading - given the params */
+		/**
+		 * Get the first and last sensor reading - given the params
+		 * @param params.id {String|Number} the plant id
+		 */
 		findFirstAndLast : function (params) {
 			if (!this.cache) { this.cache = {}; }
 

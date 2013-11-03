@@ -16,18 +16,27 @@
 		findOne     : '/plants/{plantId}/videos/{videoId}.json',
 		/**
 		 * Find a video for a given date
-		 * @param options.plantId
-		 * @param options.date
+		 * @param options.plantId {String|Number}
+		 * @param options.date {String} iso8601 date
 		 */
 		findForDate : function (options) {
 			return this.findAll({plantId : options.plantId})
 				.then(function (videos) {
-					var videoCurrentDate = null;
-					videos.each(function (video) {
+					var videoCurrentDate = null,
+						video,
+						len = videos.length,
+						i = 0;
+
+					console.log(options, videos)
+
+					while (!videoCurrentDate && i < len) {
+						video = videos[i];
 						if (utils.isoDate(video.timelapseDate()) === options.date) {
+							console.log('match');
 							videoCurrentDate = video;
 						}
-					});
+						i++;
+					}
 					return videoCurrentDate;
 				});
 		}
@@ -44,7 +53,7 @@
 			return date;
 		},
 
-		thumbnail : function() {
+		thumbnail : function () {
 			return this.attr('thumbnailurl').replace('original', 'thumb');
 		}
 	});

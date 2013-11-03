@@ -5,9 +5,11 @@
 			<li><a href="#">Jordfuktighet</a></li>
 		</ul>
 	</div>
+
 	<div class="col-md-8">	
 		<div class="jumbotron ">
-			<video id="current_day_video" style="width:100%; height:400px;" controls autobuffer preload tabindex="0">
+			<span class="text-info"><%= infoMsg() %></span>
+			<video class="hide" id="current_day_video" style="width:100%; height:400px;" controls autobuffer preload tabindex="0">
 			</video>
 		</div>
 		<div class="jumbotron ">
@@ -15,6 +17,7 @@
 		</div>
 	</div>
 </div>
+
 <script>
 $(function () {
         $('#chart').highcharts({
