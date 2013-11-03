@@ -33,3 +33,7 @@
 #app{
 	margin-left:0px;
 }
+
+#choosen-day ul li a{
+	font-size:40px;
+}
