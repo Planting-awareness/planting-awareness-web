@@ -20,16 +20,24 @@
 //			console.log("Change ");
 		},
 
-		"plant/:plantId/day/:day route" : function (data) {
-			console.log("Day route", data);
-			
+		"plant/:plantId/day/:day/:sensor route" : function (data) {
+			console.log("Sensor route", data);
+
 			$('#'+dayChooserId).fadeOut().remove();
 			$rootElem.html('<div id="'+ chosenDayId + '"></div>');
 			new app.ReadingsView('#'+chosenDayId, {
 				view : 'views/readings_view.ejs',
 				plantId: data.plantId,
-				day: data.day	
+				day: data.day,
+				sensor : data.sensor
 			});
+		},
+
+		"plant/:plantId/day/:day route" : function (data) {
+			console.log("Day route", data);
+			// by default load the light sensor
+			window.location.hash = can.route.url({plantId : data.plantId, day : data.day, sensor : 'light'});
+
 		},
 
 		"plant/:plantId route" : function (data) {
