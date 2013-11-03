@@ -9,6 +9,90 @@
 
 	}
 
+	function createGraph($chartElem, sensorReadings) {
+
+		var mydata = [];
+		var startHour, endHour;
+
+		// need to offset the time, since it shows in UTC
+		var timeZoneOffset = - 1000*60*(new Date).getTimezoneOffset();
+		for (var i = 0; i < SENSORDATA.length; i++) {
+			var reading = SENSORDATA[i];
+
+			if (reading.created_at.match(/2013-09-22/)) {
+				var date = new Date(reading.created_at);
+				if(startHour === undefined) startHour = date;
+				mydata.push([date.getTime() + timeZoneOffset, reading.light]);
+				endHour = date;
+			}
+		}
+
+		var hours = Math.ceil((endHour.getTime() - startHour.getTime())/(1000*3600)),
+			pointsPerHour = 2,
+			pointsNeeded = pointsPerHour * hours,
+			distanceBetweenPoints = Math.floor(mydata.length/pointsNeeded);
+
+		function average(xySeries) {
+			var x = 0, y =0, len = xySeries.length, i = len;
+			while(i--) {
+				x+= xySeries[i][0];
+				y+= xySeries[i][1];
+			}
+			return [x/len,Math.round(y/len)];
+		}
+
+		var filteredData = [], tempArray = [];
+
+		for(var i = 0, len = mydata.length; i<len; ) {
+			filteredData.push(average(mydata.slice(i,i+distanceBetweenPoints)));
+			i+=distanceBetweenPoints;
+		}
+
+
+
+//		if(false)
+		$('#chart').highcharts({
+			chart    : {
+				type : 'spline'
+			},
+			title    : {
+				text : 'Snow depth at Vikjafjellet, Norway'
+			},
+			subtitle : {
+				text : 'Irregular time data in Highcharts JS'
+			},
+			xAxis    : {
+				type                 : 'datetime',
+				dateTimeLabelFormats : { // don't display the dummy year
+//					month : '%e. %b',
+//					year  : '%b'
+				}
+			},
+//			yAxis    : {
+//				title : {
+//					text : 'Snow depth (m)'
+//				},
+//				min   : 0
+//			},
+			tooltip  : {
+//				formatter : function () {
+//					return '<b>' + this.series.name + '</b><br/>' +
+//							Highcharts.dateFormat('%e. %b', this.x) + ': ' + this.y + ' m';
+//				}
+			},
+
+			series : [
+				{
+					name : 'Winter 2007-2008',
+					// Define the data points. All series have a dummy year
+					// of 1970/71 in order to be compared on the same x axis. Note
+					// that in JavaScript, months start at 0 for January, 1 for February etc.
+					data : filteredData
+				}
+			]
+		});
+	}
+
 	app.ReadingsView = can.Control({
 		/* here you can put static data, like default options */
 	}, {
@@ -46,6 +130,7 @@
 
 			// render the plant chooser view
 			this.element.html(can.view(view, {infoMsg : infoMsg }));
+			createGraph();
 		}
 	});
 }());
