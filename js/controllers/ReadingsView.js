@@ -9,11 +9,11 @@
 
 			/* the passed in arguments to a newly created element
 			are available as this.element and this.options */
-
+			
 			var plants = new can.List([]),
 				imageUrls = new can.Map(),
 				view = this.options.view;
-
+			
 			// initiate server call and add plants to the list as they are available
 			app.Plant.findOne({}).done(function (plantsFromServer) {
 
