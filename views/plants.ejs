@@ -4,7 +4,7 @@
 	plants.each(function(plant) {
 	%>
 	<div class="col-md-4 plant">
-		<img width="300px" <%= imgs.attr(plant.id)? 'src="' + imgs.attr(plant.id) + '"' : '' %> alt="Bilde av en plante" />
+		<img class="img-rounded" width="100%" <%= imgs.attr(plant.id)? 'src="' + imgs.attr(plant.id) + '"' : '' %> alt="Bilde av en plante" />
 
 		<ul>
 			<li class="plant-attribute main-attribute"><%= plant.attr('name') %></li>
@@ -12,7 +12,7 @@
 			<li class="plant-attribute"><%= plant.attr('location') %></li>
 		</ul>
 
-		<button><%== can.route.link("Se mer", {plantId : plant.attr('id')}) %>
+		<button class="btn btn-default"><%== can.route.link("Se mer", {plantId : plant.attr('id')}) %>
 		</button>
 
 	</div>

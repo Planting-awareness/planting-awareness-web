@@ -1,8 +1,13 @@
+#app {
+    min-width: 1000px;
+}
 
+#day-chooser .day-cell {
+    height: 150px;
+    margin-top: 40px;
+}
 
 #day-chooser .daily-img {
-	float: left;
-	margin-top:20px;
 }
 
 #day-chooser .side_left{
@@ -10,11 +15,11 @@
 }
 
 #day-chooser .day-cell{
-    display: inline-block;
-	float: left;
-	position:relative;
 }
 
+#day-chooser ul {
+    list-style: none;
+}
 
 #day-chooser span{
  display:block;
@@ -23,11 +28,12 @@
 
 #day-chooser .link{
 	position: absolute;
-	left: 14px;
-	top: 5px;
+	left: 20px;
+	top: 15px;
 	font-size: 90px;
 	color:#00FFFF;
-	opacity:0.75;
+	opacity:0.65;
+    font-weight: bold;
 }
 
 #app{
