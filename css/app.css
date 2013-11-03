@@ -33,3 +33,7 @@
 	opacity:0.65;
     font-weight: bold;
 }
+
+#choosen-day ul li a{
+	font-size:40px;
+}

@@ -23,11 +23,12 @@
 		"plant/:plantId/day/:day route" : function (data) {
 			console.log("Day route", data);
 			
+			$('#'+dayChooserId).fadeOut().remove();
 			$rootElem.append('<div id="'+ choosenDayId + '"></div>');
-			new app.ReadingsView('#'+choosenDayId, {
+			new app.ReadingsView('#'+choosenDayId, {	
 				view : 'views/readings_view.ejs',
 				plantId: data.plantId,
-				day: data.day
+				day: data.day	
 			});
 		},
 
