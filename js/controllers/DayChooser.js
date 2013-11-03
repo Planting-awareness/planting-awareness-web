@@ -28,10 +28,18 @@
 		/* here you can put static data/functions for the constructor object itself */
 	}, {
 		init : function () {
-			var plantId = this.options.plantId,
+			var element = this.element,
+				plantId = this.options.plantId,
 				view = this.options.view,
 				dayList = can.List(),
-				imageMap = can.Map();
+				imageMap = can.Map(),
+				numberOfLoadedImgs = 0,
+				task = new can.Map({
+					progress : 0.0
+				}),
+				progressPercent = can.compute(function () {
+					return task.attr('progress') * 100;
+				});
 
 			app.SensorReading.findFirstAndLast({id : plantId}).done(function (res) {
 				can.List.prototype.push.apply(dayList, generateDayList(res.first.created(), res.last.created()));
@@ -43,18 +51,38 @@
 					// get sensordata of day
 					// add imageurl to the imagemap
 					//imageMap.attr(currentDay, imageUrl)
-					app.SensorReading.findOne({id: plantId, from : day})
+					app.SensorReading.findOne({id : plantId, from : day})
 						.done(function (sensorData) {
 							var imageUrl = sensorData[0]
 							imageMap.attr(day, imageUrl.thumb_url);
+						})
+						.done(function () {
+							numberOfLoadedImgs++;
+							task.attr('progress', progress())
 						});
 				});
 			});
 
+			function progress () {
+				var totalLen = dayList.length || 1;
+				return numberOfLoadedImgs / totalLen;
+			}
+
+			// progress loader
+			progressPercent.bind("change", function(ev, newVal, oldVal){
+				if(newVal > 99) {
+					element.find('.loading-info').fadeOut(1500);
+				}
+			});
 
 			window.imageMap = imageMap;
 
-			this.element.html(can.view(view, { plantId : plantId, days : dayList, imageMap : imageMap }));
+			this.element.html(can.view(view, {
+				plantId  : plantId,
+				days     : dayList,
+				imageMap : imageMap,
+				progress : progressPercent
+			}));
 		}
 	});
 }());

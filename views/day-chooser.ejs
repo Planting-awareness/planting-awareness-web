@@ -1,20 +1,30 @@
+<div>
+	<h2>Dag for dag</h2>
+
+	<p>Her kan du hvordan planten utvikler seg fra dag til dag. Trykk på en dag
+		for å se sensordata og en timelapse-video av planten for den dagen </p>
+</div>
+
+<div class="loading-info">Laster data om plantene
+	<div class="progress">
+		<% imageMap.attr('length'); %>
+		<div class="progress-bar" style="width: <%= progress() %>%;">
+			<span class="sr-only"><%= progress() %>% ferdig ...</span>
+		</div>
+	</div>
+</div>
+
 <ul class="days">
-	<% days.forEach(function(day, index) { 
-		var $link = $(can.route.link(index + 1, {plantId : plantId, day : index + 1}));
-			
-		$link.addClass('link');
-	%>
-	<li class="day-cell col-md-4" data-img="<%= imageMap.attr(day) %>">
-	<img src="<%= imageMap.attr(day) %>" class="daily-img" height="200" width="337"/>
-	<%== $link.get(0).outerHTML %>
-	
-	<% $('li').each(function() {
-		this.css('background-image', this.data('img'));
-	});
-	%>
-	<span class="jumbotron"> 
-		<%= day %>
-	</span>
+	<% days.forEach(function(day, index) { %>
+	<li class="col-md-4 col-sm-4">
+		<div class="day-cell">
+			<a href="<%= can.route.url({plantId : plantId, day : index + 1}) %>">
+				<img src="<%= imageMap.attr(day) %>" class="daily-img img-rounded" width="100%"/>
+				<span class="link"><%= index + 1 %></span>
+
+				<span class="date "> <%= day %> </span>
+			</a>
+		</div>
 	</li>
 	<% }); %>
 </ul>

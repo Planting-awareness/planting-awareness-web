@@ -1,9 +1,6 @@
-<section id="breadcrumb">
-	<div>Du er her :</div>
-	<nav class="breadcrumb">
-		<%== can.route.link("Plantevalg", {}) %>
-		<% $.each(breadcrumbs(), function(i, levelTuple){ %>
-			=> <%== levelTuple %>
-		<% }) %>
-	</nav>
-</section>
+<ol class="breadcrumb">
+	<% var list = breadcrumbs(), len = list.length;
+			$.each(list, function(index, level){ %>
+	<li class="<%= index === (len - 1) ? "active" : "" %>"><%== level %></li>
+	<% }) %>
+</ol>

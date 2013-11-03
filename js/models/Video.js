@@ -34,7 +34,18 @@
 	}, {
 		/* utility functions */
 		timelapseDate : function () {
-			return new Date(this.attr('date'));
+			var date;
+			if (this.date) {
+				date = new Date(this.date);
+			} else {
+				date = new Date(this.created_at);
+				date = new Date(date.getTime() - 1000 * 3600 * 24);
+			}
+			return date;
+		},
+
+		thumbnail : function() {
+			return this.attr('thumbnailurl').replace('original', 'thumb');
 		}
 	});
 }());
