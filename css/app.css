@@ -1,9 +1,10 @@
 #app {
     min-width: 1000px;
+    margin-left:0px;
 }
 
 #day-chooser .day-cell {
-    height: 150px;
+    min-height: 200px;
     margin-top: 40px;
 }
 
@@ -12,9 +13,6 @@
 
 #day-chooser .side_left{
 	text-align: center;
-}
-
-#day-chooser .day-cell{
 }
 
 #day-chooser ul {
@@ -34,8 +32,4 @@
 	color:#00FFFF;
 	opacity:0.65;
     font-weight: bold;
-}
-
-#app{
-	margin-left:0px;
 }
