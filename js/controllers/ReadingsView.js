@@ -16,10 +16,10 @@
 
 		// need to offset the time, since it shows in UTC
 		var timeZoneOffset;
-		for (var i = 0; i < SENSORDATA.length; i++) {
-			var reading = SENSORDATA[i];
+		for (var i = 0; i < sensorReadings.length; i++) {
+			var reading = sensorReadings[i];
 
-			if (reading.created_at.match(/2013-09-22/)) {
+//			if (reading.created_at.match(/2013-09-22/)) {
 				var date = new Date(reading.created_at);
 				if(startHour === undefined) {
 					startHour = date;
@@ -27,7 +27,7 @@
 				}
 				mydata.push([date.getTime() + timeZoneOffset, reading.light]);
 				endHour = date;
-			}
+//			}
 		}
 
 		var hours = Math.ceil((endHour.getTime() - startHour.getTime())/(1000*3600)),
@@ -107,7 +107,8 @@
 				plantId = this.options.plantId,
 				elem = this.element,
 				day = this.options.day,
-				infoMsg = can.compute('Henter video ...');
+				infoMsg = can.compute('Henter video ...'),
+				infoMsgGraph = can.compute('Henter grafdata ... ');
 
 			// get first day of readings
 			app.SensorReading.findFirstAndLast({ id : plantId})
@@ -119,6 +120,8 @@
 					app.SensorReading.findAllOnDate({id : plantId, date : dateAsString})
 						.then(function (readings) {
 							// do something with readings
+							elem.find('.info-graph').addClass('hide');
+							createGraph(elem.find('#chart'), readings);
 						});
 
 					app.Video.findForDate({plantId : plantId, date : dateAsString})
@@ -126,17 +129,17 @@
 							if (!video) {
 								infoMsg('Ingen video funnet');
 							} else {
-								elem.find('.text-info').addClass('hide');
+								elem.find('.info-video').addClass('hide');
 								var $videoElem = $('video');
-								$videoElem.attr('src', video.attr('mp4'));
+								var videoUrl = video.attr('mp4') || video.attr('videourl');
+								$videoElem.attr('src', videoUrl);
 								$videoElem.removeClass("hide");
 							}
 						});
 				});
 
 			// render the plant chooser view
-			this.element.html(can.view(view, {infoMsg : infoMsg }));
-			createGraph();
+			this.element.html(can.view(view, {infoMsg : infoMsg, infoMsgGraph :  infoMsgGraph }));
 		}
 	});
 }());

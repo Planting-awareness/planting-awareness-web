@@ -32,59 +32,30 @@
 
 		/**
 		 * Retrieve all sensor data from a given date
-		 * Will resolve the deferred almost immediately, but will continue to fill the resolved observable list with data
 		 * The resolved list will be empty if no data could be found for that date
 		 *
 		 * @param params.id {String}
 		 * @param params.date {String} an iso date
 		 *
-		 * @returns {Deferred}
+		 * @returns {Deferred} with [String]
 		 */
 		findAllOnDate : function (params) {
 			var dfd = $.Deferred(),
 				resultList = app.SensorReading.List(),
-				url = '/plants/{id}/sensorvalues.json?from={date}&to={date}&page={page}&limit=200';
+				url = '/plants/{id}/sensorvalues.json?from={date}&to={date}&page={page}&limit=1500';
 
 
 			function appendToList (rawReadings) {
+				console.log('appending')
 				rawReadings.forEach(function (reading) {
 					resultList.push(new app.SensorReading(reading));
 				});
 			}
 
-			$.ajax(replaceTokens(url, $.extend({}, params, { page : 1})))
-				.then(function (data, textStatus, jqXHR) {
-					var responseHeader, parser, dfd, lastUrl;
-
-					dfd = $.Deferred();
-
-					if (data.length === 0) { dfd.reject(); }
-					else {
-						appendToList(data);
-
-						responseHeader = getLinkHeader(jqXHR);
-
-						if (!responseHeader) { dfd.reject(); }
-						parser = new app.LinkHeaderParser(responseHeader);
-						lastUrl = parser.getUrlOfLastResultPage();
-
-						var match = lastUrl.match(/page=(\d+)/), numberOfPages;
-						if (!match) { throw new Error('Could not parse url: ' + lastUrl); }
-
-						numberOfPages = match[1];
-
-						dfd.resolve(numberOfPages);
-					}
-					return dfd;
-				})
-				.then(function (numberOfPages) {
-					for (var i = 2; i <= numberOfPages; i++) {
-						$.ajax(replaceTokens(url, $.extend({}, params, { page : i}))).done(appendToList);
-					}
+			$.ajax(replaceTokens(url, params))
+				.then(appendToList).then(function(){
+					dfd.resolve(resultList);
 				});
-
-			// Resolve immediately, but since the list is an observable, we can keep on adding to it!
-			dfd.resolve(resultList);
 
 			return dfd.promise();
 		},

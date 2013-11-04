@@ -8,12 +8,13 @@
 
 	<div class="col-md-8">
 		<div class="jumbotron ">
-			<span class="text-info"><%= infoMsg() %></span>
+			<span class="text-info info-video"><%= infoMsg() %></span>
 			<video class="hide" id="current_day_video" style="width:100%; height:400px;" controls autobuffer preload
 			       tabindex="0">
 			</video>
 		</div>
 		<div class="jumbotron ">
+			<span class="text-info info-graph"><%= infoMsgGraph() %></span>
 			<div id="chart" style="width:100%; height:400px;"></div>
 		</div>
 	</div>
