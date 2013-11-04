@@ -9,51 +9,51 @@
 
 	}
 
-	function createGraph($chartElem, sensorReadings) {
-
+	function createGraphData (sensorReadings) {
 		var mydata = [];
 		var startHour, endHour;
+
+		function average (xySeries) {
+			var x = 0, y = 0, len = xySeries.length, i = len;
+			while (i--) {
+				x += xySeries[i][0];
+				y += xySeries[i][1];
+			}
+			return [x / len, Math.round(y / len)];
+		}
 
 		// need to offset the time, since it shows in UTC
 		var timeZoneOffset;
 		for (var i = 0; i < sensorReadings.length; i++) {
 			var reading = sensorReadings[i];
 
-//			if (reading.created_at.match(/2013-09-22/)) {
-				var date = new Date(reading.created_at);
-				if(startHour === undefined) {
-					startHour = date;
-					timeZoneOffset = - 1000*60*date.getTimezoneOffset();
-				}
-				mydata.push([date.getTime() + timeZoneOffset, reading.light]);
-				endHour = date;
-//			}
+			var date = new Date(reading.created_at);
+			if (startHour === undefined) {
+				startHour = date;
+				timeZoneOffset = -1000 * 60 * date.getTimezoneOffset();
+			}
+			mydata.push([date.getTime() + timeZoneOffset, reading.light]);
+			endHour = date;
 		}
 
-		var hours = Math.ceil((endHour.getTime() - startHour.getTime())/(1000*3600)),
+		var hours = Math.ceil((endHour.getTime() - startHour.getTime()) / (1000 * 3600)),
 			pointsPerHour = 2,
 			pointsNeeded = pointsPerHour * hours,
-			distanceBetweenPoints = Math.floor(mydata.length/pointsNeeded);
+			distanceBetweenPoints = Math.floor(mydata.length / pointsNeeded);
 
-		function average(xySeries) {
-			var x = 0, y =0, len = xySeries.length, i = len;
-			while(i--) {
-				x+= xySeries[i][0];
-				y+= xySeries[i][1];
-			}
-			return [x/len,Math.round(y/len)];
-		}
 
 		var filteredData = [];
 
-		for(var i = 0, len = mydata.length; i<len; ) {
-			filteredData.push(average(mydata.slice(i,i+distanceBetweenPoints)));
-			i+=distanceBetweenPoints;
+		for (var i = 0, len = mydata.length; i < len;) {
+			filteredData.push(average(mydata.slice(i, i + distanceBetweenPoints)));
+			i += distanceBetweenPoints;
 		}
+	}
 
+	function createGraph ($chartElem, sensorReadings) {
 
+		var filteredData = createGraphData(sensorReadings);
 
-//		if(false)
 		var titleText = 'Lysmålinger av planten';
 		var yAxisTitleText = 'lux';
 		var yAxisMinimum = 0;
@@ -121,7 +121,18 @@
 						.then(function (readings) {
 							// do something with readings
 							elem.find('.info-graph').addClass('hide');
+
+							// for Eva: test changes like this:
+//							var dataForOneDay = [];
+//							for(var i= 0, len = SENSORDATA.length; i< len; i++ ) {
+//								if(SENSORDATA[i].created_at.match(/2013-09-21/)) {
+//									dataForOneDay.push(new app.SensorReading(SENSORDATA[i]));
+//								}
+//							}
+//							createGraph(elem.find('#chart'), dataForOneDay);
+
 							createGraph(elem.find('#chart'), readings);
+
 						});
 
 					app.Video.findForDate({plantId : plantId, date : dateAsString})
@@ -139,7 +150,7 @@
 				});
 
 			// render the plant chooser view
-			this.element.html(can.view(view, {infoMsg : infoMsg, infoMsgGraph :  infoMsgGraph }));
+			this.element.html(can.view(view, {infoMsg : infoMsg, infoMsgGraph : infoMsgGraph }));
 		}
 	});
 }());
