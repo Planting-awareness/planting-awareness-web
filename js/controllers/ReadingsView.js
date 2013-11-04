@@ -43,11 +43,30 @@
 
 
 		var filteredData = [];
-
-		for (var i = 0, len = mydata.length; i < len;) {
-			filteredData.push(average(mydata.slice(i, i + distanceBetweenPoints)));
-			i += distanceBetweenPoints;
+		 
+		var i =0, 
+			currentMs,
+			len = mydata.length,
+			periodInMs = 30*60*1000,
+			startOfInterval = 0,
+			startOfIntervalMs = 0,
+			endOfIntervalMs = 0 ;
+			
+		 while (startOfInterval < len) {
+			
+			endOfIntervalMs = parseInt(mydata[startOfInterval]) + periodInMs;			
+			currentMs = mydata[i][0];
+			
+			while (currentMs < endOfIntervalMs ) {
+				i++;
+				currentMs = mydata[i][0];
+			}
+						
+			filteredData.push(average(mydata.slice(startOfInterval, i)));
+			startOfInterval = i;
 		}
+		
+		return filteredData;
 	}
 
 	function createGraph ($chartElem, sensorReadings) {
@@ -123,15 +142,20 @@
 							elem.find('.info-graph').addClass('hide');
 
 							// for Eva: test changes like this:
-//							var dataForOneDay = [];
-//							for(var i= 0, len = SENSORDATA.length; i< len; i++ ) {
-//								if(SENSORDATA[i].created_at.match(/2013-09-21/)) {
-//									dataForOneDay.push(new app.SensorReading(SENSORDATA[i]));
-//								}
-//							}
-//							createGraph(elem.find('#chart'), dataForOneDay);
+							var dataForOneDay = [];
+							// for(var i= 0, len = SENSORDATA.length; i< len; i++ ) {
+								// if(SENSORDATA[i].created_at.match(/2013-09-21/)) {
+									// dataForOneDay.push(new app.SensorReading(SENSORDATA[i]));
+								// }
+							// }
+							// createGraph(elem.find('#chart'), dataForOneDay);
 
-							createGraph(elem.find('#chart'), readings);
+							var dataForOneDay = [];
+							for(var i= 0, len = oct25.length; i< len; i++ ) {
+									dataForOneDay.push(new app.SensorReading(oct25[i]));
+							}
+							createGraph(elem.find('#chart'), dataForOneDay);
+							// createGraph(elem.find('#chart'), readings);
 
 						});
 
