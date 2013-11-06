@@ -51,15 +51,15 @@
 			startOfInterval = 0,
 			startOfIntervalMs = 0,
 			endOfIntervalMs = 0 ;
-			
+		
 		 while (startOfInterval < len) {
-			
 			endOfIntervalMs = parseInt(mydata[startOfInterval]) + periodInMs;			
 			currentMs = mydata[i][0];
 			
-			while (currentMs < endOfIntervalMs ) {
-				i++;
+			while (currentMs < endOfIntervalMs && i < mydata.length ) {
+				
 				currentMs = mydata[i][0];
+				i++;
 			}
 						
 			filteredData.push(average(mydata.slice(startOfInterval, i)));
@@ -72,7 +72,6 @@
 	function createGraph ($chartElem, sensorReadings) {
 
 		var filteredData = createGraphData(sensorReadings);
-
 		var titleText = 'Lysmålinger av planten';
 		var yAxisTitleText = 'lux';
 		var yAxisMinimum = 0;
