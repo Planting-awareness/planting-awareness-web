@@ -15,11 +15,15 @@
 
 		function average (xySeries) {
 			var x = 0, y = 0, len = xySeries.length, i = len;
-			while (i--) {
-				x += xySeries[i][0];
-				y += xySeries[i][1];
-			}
-			return [x / len, Math.round(y / len)];
+			// if (len = 0) {
+				// y = 0;
+			// }
+			// else
+				while (i--) {
+					x += xySeries[i][0];
+					y += xySeries[i][1];
+				}
+			return [xySeries[0][0] , Math.round(y / len)];
 		}
 
 		// need to offset the time, since it shows in UTC
@@ -36,10 +40,10 @@
 			endHour = date;
 		}
 
-		var hours = Math.ceil((endHour.getTime() - startHour.getTime()) / (1000 * 3600)),
-			pointsPerHour = 2,
-			pointsNeeded = pointsPerHour * hours,
-			distanceBetweenPoints = Math.floor(mydata.length / pointsNeeded);
+		// var hours = Math.ceil((endHour.getTime() - startHour.getTime()) / (1000 * 3600)),
+			// pointsPerHour = 2,
+			// pointsNeeded = pointsPerHour * hours,
+			// distanceBetweenPoints = Math.floor(mydata.length / pointsNeeded);
 
 
 		var filteredData = [];
@@ -141,7 +145,7 @@
 							elem.find('.info-graph').addClass('hide');
 
 							// for Eva: test changes like this:
-							var dataForOneDay = [];
+							// var dataForOneDay = [];
 							// for(var i= 0, len = SENSORDATA.length; i< len; i++ ) {
 								// if(SENSORDATA[i].created_at.match(/2013-09-21/)) {
 									// dataForOneDay.push(new app.SensorReading(SENSORDATA[i]));
@@ -154,7 +158,7 @@
 									dataForOneDay.push(new app.SensorReading(oct25[i]));
 							}
 							createGraph(elem.find('#chart'), dataForOneDay);
-							// createGraph(elem.find('#chart'), readings);
+							createGraph(elem.find('#chart'), readings);
 
 						});
 
