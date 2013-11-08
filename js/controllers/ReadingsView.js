@@ -173,7 +173,7 @@
 				});
 
 			// render the plant chooser view
-			this.element.html(can.view(view, {infoMsg : infoMsg, infoMsgGraph : infoMsgGraph }));
+			this.element.html(can.view(view, {plantId : plantId, day: day, infoMsg : infoMsg, infoMsgGraph : infoMsgGraph }));
 		}
 	});
 }());

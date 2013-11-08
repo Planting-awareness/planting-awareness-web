@@ -22,7 +22,15 @@
 
 		"plant/:plantId/day/:day/:sensor route" : function (data) {
 			console.log("Sensor route", data);
-
+			
+			if(data.sensor === 'light'){
+				console.log("Light", data);
+				window.location.hash = can.route.url({plantId : data.plantId, day : data.day, sensor : 'light'});
+			}else{
+				console.log("Soilmoisture", data);
+				window.location.hash = can.route.url({plantId : data.plantId, day : data.day, sensor : 'soilmoisture'});
+			}
+			
 			$('#'+dayChooserId).fadeOut().remove();
 			$rootElem.html('<div id="'+ chosenDayId + '"></div>');
 			new app.ReadingsView('#'+chosenDayId, {

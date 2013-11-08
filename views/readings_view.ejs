@@ -1,8 +1,8 @@
 <div class="row">
 	<div class="col-md-4">
 		<ul id="graph_list" class="nav nav-pills nav-stacked">
-			<li><a href="#">Lys</a></li>
-			<li><a href="#">Jordfuktighet</a></li>
+			<li><a href="<%= can.route.url({plantId : plantId, day : day, sensor: 'light'}) %>">Lys</a></li>
+			<li><a href="<%= can.route.url({plantId : plantId, day : day, sensor: 'soilmoisture'}) %>">Jordfuktighet</a></li>
 		</ul>
 	</div>
 
