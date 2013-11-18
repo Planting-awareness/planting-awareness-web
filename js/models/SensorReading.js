@@ -46,7 +46,6 @@
 
 
 			function appendToList (rawReadings) {
-				console.log('appending')
 				rawReadings.forEach(function (reading) {
 					resultList.push(new app.SensorReading(reading));
 				});

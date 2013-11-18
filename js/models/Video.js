@@ -27,12 +27,10 @@
 						len = videos.length,
 						i = 0;
 
-					console.log(options, videos)
 
 					while (!videoCurrentDate && i < len) {
 						video = videos[i];
 						if (utils.isoDate(video.timelapseDate()) === options.date) {
-							console.log('match');
 							videoCurrentDate = video;
 						}
 						i++;
