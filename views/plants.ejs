@@ -12,8 +12,10 @@
 			<li class="plant-attribute"><%= plant.attr('location') %></li>
 		</ul>
 
-		<button class="btn btn-default"><%== can.route.link("Se mer", {plantId : plant.attr('id')}) %>
-		</button>
+		<button class="btn btn-default"><%== can.route.link("Se mer", {plantId : plant.attr('id')}) %> </button>
+		<%if(plant.id === 3 || plant.id === 4) { %>
+		<button class="btn btn-default"><a href="/plant<%=  plant.attr('id') %>.zip">Last ned data</a> </button>
+		<%}%>
 
 	</div>
 	<% }); %>

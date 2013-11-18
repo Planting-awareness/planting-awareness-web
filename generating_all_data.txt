@@ -1,0 +1,6 @@
+To be able to download all data and process it for further work in Excel the following work was done:
+- Download all the sensor data  for each plant
+- Parse it 
+- Generate various files with the following content
+  - Date and light readings with one hour intervals
+  - Date and moisture readings with one hour intervals
