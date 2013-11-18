@@ -42,7 +42,7 @@
 		findAllOnDate : function (params) {
 			var dfd = $.Deferred(),
 				resultList = app.SensorReading.List(),
-				url = '/plants/{id}/sensorvalues.json?from={date}&to={date}&page={page}&limit=1500';
+				url = '/plants/{id}/sensorvalues.json?from={date}&to={date}&limit=1500'; //1500 readings max per day
 
 
 			function appendToList (rawReadings) {
