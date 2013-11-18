@@ -9,7 +9,8 @@
 	function generateDayList (first, last) {
 		var current = first,
 			oneDay = 1000 * 60 * 60 * 24,
-			dateList = [];
+			dateList = [],
+			len;
 
 		function formatDate (date) {
 			return date.toISOString().substring(0, 10);
@@ -20,6 +21,13 @@
 			current = new Date(current.getTime() + oneDay);
 		}
 		dateList.push(formatDate(last));
+
+		/* Get rid of duplicates at the end */
+		len = dateList.length;
+		if(len >= 2 && dateList[len-1] === dateList[len-2]) {
+			dateList.pop();
+		}
+
 		return dateList;
 	}
 
