@@ -13,14 +13,15 @@ def filter_readings(values, hoursBetweenReadings):
     return filtered_values
 
 def excel_datetime_string(dt):
-    return   dt.strftime('%Y-%m-%d %H:%M')
+    return dt.strftime('%Y-%m-%dT%H:%M')
 
 
 def write_csv(field_id, sensor_readings):
     with open(field_id + '.csv', 'w') as f:
         csv_writer = csv.writer(f, delimiter=';')
+        csv_writer.writerow(['TID', 'SENSOR:' + field_id])
         for val in sensor_readings:
-            csv_writer.writerow([excel_datetime_string(val[0]),val[1]])
+            csv_writer.writerow([excel_datetime_string(val[0]), val[1]])
 
 
 def add_filler_values(values):
@@ -58,8 +59,8 @@ if __name__ == '__main__':
 
     values = json.load(sys.stdin)
 
-    create_files('light', values, True)
-    create_files('soilMoisture', values, True)
+    create_files('light', values)
+    create_files('soilMoisture', values)
 
 
 
